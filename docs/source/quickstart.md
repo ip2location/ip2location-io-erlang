@@ -163,8 +163,8 @@ testme() ->
 					io:format("proxy => is_web_proxy: ~p~n", [maps:get(<<"is_web_proxy">>, Proxy)]),
 					io:format("proxy => is_web_crawler: ~p~n", [maps:get(<<"is_web_crawler">>, Proxy)]),
 					io:format("proxy => is_residential_proxy: ~p~n", [maps:get(<<"is_residential_proxy">>, Proxy)]),
-					io:format("proxy => is_residential_proxy: ~p~n", [maps:get(<<"is_consumer_privacy_network">>, Proxy)]),
-					io:format("proxy => is_residential_proxy: ~p~n", [maps:get(<<"is_enterprise_private_network">>, Proxy)]),
+					io:format("proxy => is_consumer_privacy_network: ~p~n", [maps:get(<<"is_consumer_privacy_network">>, Proxy)]),
+					io:format("proxy => is_enterprise_private_network: ~p~n", [maps:get(<<"is_enterprise_private_network">>, Proxy)]),
 					io:format("proxy => is_spammer: ~p~n", [maps:get(<<"is_spammer">>, Proxy)]),
 					io:format("proxy => is_scanner: ~p~n", [maps:get(<<"is_scanner">>, Proxy)]),
 					io:format("proxy => is_botnet: ~p~n", [maps:get(<<"is_botnet">>, Proxy)]);
