@@ -63,6 +63,7 @@ testme() ->
 			io:format("ads_category: ~p~n", [maps:get(<<"ads_category">>, Result)]),
 			io:format("ads_category_name: ~p~n", [maps:get(<<"ads_category_name">>, Result)]),
 			io:format("is_proxy: ~p~n", [maps:get(<<"is_proxy">>, Result)]),
+			io:format("fraud_score: ~p~n", [maps:get(<<"fraud_score">>, Result)]),
 			
 			% continent addon
 			case maps:is_key(<<"continent">>, Result) of
