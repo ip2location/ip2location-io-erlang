@@ -325,3 +325,31 @@ testme() ->
 	Domainextension = ip2locationio:getdomainextension("example.com"),
 	io:format("Domainextension: ~p~n", [Domainextension]).
 ```
+
+### Lookup IP Address Hosted Domains Data
+
+You can lookup hosted domains information as below:
+
+``` erlang
+-module(test).
+-export([testme/0]).
+
+testme() ->
+	APIKey = "YOUR_API_KEY",
+	IP = "8.8.8.8",
+	
+	ip2locationio:new(APIKey),
+	
+	Result = ip2locationio:lookuphosteddomain(IP),
+	case Result of
+		{error, Reason} ->
+			io:format("Error: ~p~n", [Reason]);
+		_ ->
+			io:format("ip: ~p~n", [maps:get(<<"ip">>, Result)]),
+			io:format("total_domains: ~p~n", [maps:get(<<"total_domains">>, Result)]),
+			io:format("page: ~p~n", [maps:get(<<"page">>, Result)]),
+			io:format("per_page: ~p~n", [maps:get(<<"per_page">>, Result)]),
+			io:format("total_pages: ~p~n", [maps:get(<<"total_pages">>, Result)]),
+			io:format("domains: ~p~n", [maps:get(<<"domains">>, Result)])
+	end.
+```

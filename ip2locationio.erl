@@ -1,5 +1,5 @@
 -module(ip2locationio).
--export([new/1, lookupipgeolocation/1, lookupipgeolocation/2, lookupdomainwhois/1, getpunycode/1, getnormaltext/1, getdomainname/1, getdomainextension/1]).
+-export([new/1, lookupipgeolocation/1, lookupipgeolocation/2, lookupdomainwhois/1, getpunycode/1, getnormaltext/1, getdomainname/1, getdomainextension/1, lookuphosteddomain/1, lookuphosteddomain/2]).
 
 clearconfig() ->
 	case ets:info(myconfig) of
@@ -16,7 +16,7 @@ new(APIKey) ->
 	case ets:info(myconfig) of
 		undefined ->
 			ets:new(myconfig, [set, named_table]),
-			ets:insert(myconfig, {version, "1.0.1"}),
+			ets:insert(myconfig, {version, "1.1.0"}),
 			ets:insert(myconfig, {apikey, APIKey}),
 			ok;
 		_ ->
@@ -51,7 +51,7 @@ lookupipgeolocation(IPAddress, Lang) ->
 								_ ->
 									MyParams = uri_string:compose_query([{"format", "json"}, {"source_version", Version}, {"source", "sdk-erlang-iplio"}, {"key", APIKey}, {"ip", IPAddress}, {"lang", Lang}])
 							end,
-							case httpc:request(get, {"https://api.ip2location.io/?" ++ MyParams, []}, [{ssl, [{versions, ['tlsv1.2']}]}, {autoredirect, false}], []) of
+							case httpc:request(get, {"https://api.ip2location.io/?" ++ MyParams, []}, [{ssl, [{versions, ['tlsv1.2']}, {verify, verify_none}]}, {autoredirect, false}], []) of
 								{ok, {{_, 200, _}, _, Body}} ->
 									jiffy:decode(unicode:characters_to_binary(Body,unicode,utf8),[return_maps]);
 								{error, Reason} ->
@@ -81,7 +81,7 @@ lookupdomainwhois(Domain) ->
 							halt();
 						[{_, Version}] ->
 							MyParams = uri_string:compose_query([{"format", "json"}, {"source_version", Version}, {"source", "sdk-erlang-iplio"}, {"key", APIKey}, {"domain", Domain}]),
-							case httpc:request(get, {"https://api.ip2whois.com/v2?" ++ MyParams, []}, [{ssl, [{versions, ['tlsv1.2']}]}, {autoredirect, false}], []) of
+							case httpc:request(get, {"https://api.ip2whois.com/v2?" ++ MyParams, []}, [{ssl, [{versions, ['tlsv1.2']}, {verify, verify_none}]}, {autoredirect, false}], []) of
 								{ok, {{_, 200, _}, _, Body}} ->
 									jiffy:decode(unicode:characters_to_binary(Body,unicode,utf8),[return_maps]);
 								{error, Reason} ->
@@ -140,3 +140,40 @@ getdomainextension(Str) ->
 	Domain = getdomainname(Str),
 	string:find(Domain, ".", trailing).
 
+lookuphosteddomain(IPAddress) ->
+	lookuphosteddomain(IPAddress, undefined).
+
+lookuphosteddomain(IPAddress, Page) ->
+	ssl:start(),
+	inets:start(),
+	
+	case ets:info(myconfig) of
+		undefined ->
+			io:format("Run new first.~n", []),
+			halt();
+		_ ->
+			case ets:lookup(myconfig, apikey) of
+				[] ->
+					io:format("Run new first.~n", []),
+					halt();
+				[{_, APIKey}] ->
+					case ets:lookup(myconfig, version) of
+						[] ->
+							io:format("Run new first.~n", []),
+							halt();
+						[{_, Version}] ->
+							case Page of
+								undefined ->
+									MyParams = uri_string:compose_query([{"format", "json"}, {"source_version", Version}, {"source", "sdk-erlang-iplio"}, {"key", APIKey}, {"ip", IPAddress}]);
+								_ ->
+									MyParams = uri_string:compose_query([{"format", "json"}, {"source_version", Version}, {"source", "sdk-erlang-iplio"}, {"key", APIKey}, {"ip", IPAddress}, {"page", Page}])
+							end,
+							case httpc:request(get, {"https://domains.ip2whois.com/domains?" ++ MyParams, []}, [{ssl, [{versions, ['tlsv1.2']}, {verify, verify_none}]}, {autoredirect, false}], []) of
+								{ok, {{_, 200, _}, _, Body}} ->
+									jiffy:decode(unicode:characters_to_binary(Body,unicode,utf8),[return_maps]);
+								{error, Reason} ->
+									{error, Reason}
+							end
+					end
+			end
+	end.

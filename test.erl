@@ -134,7 +134,17 @@ testme() ->
 					io:format("proxy => last_seen: ~p~n", [maps:get(<<"last_seen">>, Proxy)]),
 					io:format("proxy => proxy_type: ~p~n", [maps:get(<<"proxy_type">>, Proxy)]),
 					io:format("proxy => threat: ~p~n", [maps:get(<<"threat">>, Proxy)]),
-					io:format("proxy => provider: ~p~n", [maps:get(<<"provider">>, Proxy)]);
+					io:format("proxy => provider: ~p~n", [maps:get(<<"provider">>, Proxy)]),
+					io:format("proxy => is_vpn: ~p~n", [maps:get(<<"is_vpn">>, Proxy)]),
+					io:format("proxy => is_tor: ~p~n", [maps:get(<<"is_tor">>, Proxy)]),
+					io:format("proxy => is_data_center: ~p~n", [maps:get(<<"is_data_center">>, Proxy)]),
+					io:format("proxy => is_public_proxy: ~p~n", [maps:get(<<"is_public_proxy">>, Proxy)]),
+					io:format("proxy => is_web_proxy: ~p~n", [maps:get(<<"is_web_proxy">>, Proxy)]),
+					io:format("proxy => is_web_crawler: ~p~n", [maps:get(<<"is_web_crawler">>, Proxy)]),
+					io:format("proxy => is_residential_proxy: ~p~n", [maps:get(<<"is_residential_proxy">>, Proxy)]),
+					io:format("proxy => is_spammer: ~p~n", [maps:get(<<"is_spammer">>, Proxy)]),
+					io:format("proxy => is_scanner: ~p~n", [maps:get(<<"is_scanner">>, Proxy)]),
+					io:format("proxy => is_botnet: ~p~n", [maps:get(<<"is_botnet">>, Proxy)]);
 				_ ->
 					""
 			end
@@ -220,4 +230,20 @@ testme() ->
 	io:format("Domainname: ~p~n", [Domainname]),
 	
 	Domainextension = ip2locationio:getdomainextension("example.com"),
-	io:format("Domainextension: ~p~n", [Domainextension]).
+	io:format("Domainextension: ~p~n", [Domainextension]),
+	
+	IP2 = "8.8.8.8",
+	
+	Result3 = ip2locationio:lookuphosteddomain(IP2),
+	case Result3 of
+		{error, Reason3} ->
+			io:format("Error: ~p~n", [Reason3]);
+		_ ->
+			io:format("ip: ~p~n", [maps:get(<<"ip">>, Result3)]),
+			io:format("total_domains: ~p~n", [maps:get(<<"total_domains">>, Result3)]),
+			io:format("page: ~p~n", [maps:get(<<"page">>, Result3)]),
+			io:format("per_page: ~p~n", [maps:get(<<"per_page">>, Result3)]),
+			io:format("total_pages: ~p~n", [maps:get(<<"total_pages">>, Result3)]),
+			io:format("domains: ~p~n", [maps:get(<<"domains">>, Result3)])
+	end.
+
