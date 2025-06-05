@@ -4,8 +4,9 @@ defmodule IP2LocationIOErlang.MixProject do
   def project() do
     [
       app: :ip2location_io_erlang,
-      version: "1.1.0",
+      version: "1.1.1",
       elixir: "~> 1.0",
+      erlc_paths: ["."],
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       description: description(),

@@ -16,7 +16,7 @@ new(APIKey) ->
 	case ets:info(myconfig) of
 		undefined ->
 			ets:new(myconfig, [set, named_table]),
-			ets:insert(myconfig, {version, "1.1.0"}),
+			ets:insert(myconfig, {version, "1.1.1"}),
 			ets:insert(myconfig, {apikey, APIKey}),
 			ok;
 		_ ->
