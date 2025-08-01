@@ -134,6 +134,9 @@ testme() ->
 					io:format("time_zone_info => current_time: ~p~n", [maps:get(<<"current_time">>, TimeZone)]),
 					io:format("time_zone_info => gmt_offset: ~p~n", [maps:get(<<"gmt_offset">>, TimeZone)]),
 					io:format("time_zone_info => is_dst: ~p~n", [maps:get(<<"is_dst">>, TimeZone)]),
+					io:format("time_zone_info => abbreviation: ~p~n", [maps:get(<<"abbreviation">>, TimeZone)]),
+					io:format("time_zone_info => dst_start_date: ~p~n", [maps:get(<<"dst_start_date">>, TimeZone)]),
+					io:format("time_zone_info => dst_end_date: ~p~n", [maps:get(<<"dst_end_date">>, TimeZone)]),
 					io:format("time_zone_info => sunrise: ~p~n", [maps:get(<<"sunrise">>, TimeZone)]),
 					io:format("time_zone_info => sunset: ~p~n", [maps:get(<<"sunset">>, TimeZone)]);
 				_ ->
