@@ -172,6 +172,7 @@ testme() ->
 					io:format("proxy => is_spammer: ~p~n", [maps:get(<<"is_spammer">>, Proxy)]),
 					io:format("proxy => is_scanner: ~p~n", [maps:get(<<"is_scanner">>, Proxy)]),
 					io:format("proxy => is_botnet: ~p~n", [maps:get(<<"is_botnet">>, Proxy)]);
+					io:format("proxy => is_bogon: ~p~n", [maps:get(<<"is_bogon">>, Proxy)]);
 				_ ->
 					""
 			end
