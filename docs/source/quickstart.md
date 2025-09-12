@@ -66,6 +66,19 @@ testme() ->
 			io:format("fraud_score: ~p~n", [maps:get(<<"fraud_score">>, Result)]),
 			
 			% continent addon
+			case maps:is_key(<<"as_info">>, Result) of
+				true ->
+					Asinfo = maps:get(<<"as_info">>, Result),
+					io:format("as_info => as_name: ~p~n", [maps:get(<<"as_name">>, Asinfo)]),
+					io:format("as_info => as_number: ~p~n", [maps:get(<<"as_number">>, Asinfo)]),
+					io:format("as_info => as_domain: ~p~n", [maps:get(<<"as_domain">>, Asinfo)]),
+					io:format("as_info => as_cidr: ~p~n", [maps:get(<<"as_cidr">>, Asinfo)]);
+					io:format("as_info => as_usage_type: ~p~n", [maps:get(<<"as_usage_type">>, Asinfo)]);
+				_ ->
+					""
+			end,
+			
+			% continent addon
 			case maps:is_key(<<"continent">>, Result) of
 				true ->
 					Continent = maps:get(<<"continent">>, Result),
