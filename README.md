@@ -1,6 +1,5 @@
 # IP2Location.io Erlang SDK — IP Geolocation, Domain WHOIS & Hosted Domain Lookup
-
-[![GitHub Repository](https://img.shields.io/badge/GitHub-ip2location--io--erlang-181717?logo=github)](https://github.com/ip2location/ip2location-io-erlang)
+![Hex.pm Version](https://img.shields.io/hexpm/v/ip2location_io_erlang)
 [![Documentation](https://img.shields.io/badge/Docs-Read%20the%20Docs-blue)](https://ip2location-io-erlang.readthedocs.io/en/latest/index.html)
 
 **IP2Location.io Erlang SDK** is an Erlang module for retrieving **IPv4 and IPv6 geolocation, network, and IP intelligence information** from the [IP2Location.io API](https://www.ip2location.io/). It also supports **domain WHOIS lookup**, **domain/Punycode utilities**, and **hosted-domain lookup**. The module returns decoded Erlang maps for successful API lookups.
